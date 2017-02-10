@@ -37,13 +37,24 @@ function Card(image, title) {
     });
     this.root.append(subtext);
   };
+
+  this.setLink = function (url) {
+    this.root.click(function (e) {
+      window.open(url);
+    })
+  }
 }
 
 var loaded;
 
 function showBranch(github, repo, branch) {
   function callback(error, info) {
-    console.log(info);
+    console.group(branch.name);
+    console.log("GitHub", github);
+    console.log("Repo", repo);
+    console.log("Branch", branch);
+    console.log("Info", info);
+    console.groupEnd();
     var commits = info.commits;
     var lastCommon = info.merge_base_commit;
     var last_commit;
@@ -58,13 +69,13 @@ function showBranch(github, repo, branch) {
     var behind = info.behind_by;
     var login = last_commit.author.login;
     var status = info.status;
-    console.log(last_commit);
     var card = new Card(image, name);
     card.addRow(login);
     card.addRow("Ahead by: " + ahead + " Behind by: " + behind);
     card.addRow("Last commit:<br>" + getCommitDate(last_commit));
     card.addRow("Split date:<br>" + getCommitDate(lastCommon));
     card.addRow("Status: " + status.toUpperCase(), ["status-" + status, "status"]);
+    card.setLink(info.html_url);
     $("#cards").append(card.root);
   }
 
