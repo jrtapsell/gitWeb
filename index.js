@@ -8,7 +8,7 @@
  * @constructor
  */
 function Card(image, title) {
-  this.root = $('<div/>', {'class': 'demo-card-wide mdl-card mdl-shadow--2dp', 'id': 'branch-' + title});
+  this.root = $('<div/>', {'class': 'demo-card-wide mdl-card mdl-shadow--2dp branch-card', 'id': 'branch-' + title});
 
   this.heading = $('<div/>', {'class': 'mdl-card__title'});
   this.heading.css('background', 'url(\'' + image + '\') center / cover');
@@ -28,14 +28,14 @@ function Card(image, title) {
    *  The classes to add
    */
   this.addRow = function (html, classes) {
-      var subtext = $('<div/>', {
-        'class': 'mdl-card__actions mdl-card--border',
-        'html': html
-      });
-      $.each(classes, function (index, value) {
-        subtext.addClass(value);
-      });
-      this.root.append(subtext);
+    var subtext = $('<div/>', {
+      'class': 'mdl-card__actions mdl-card--border',
+      'html': html
+    });
+    $.each(classes, function (index, value) {
+      subtext.addClass(value);
+    });
+    this.root.append(subtext);
   };
 }
 
@@ -67,6 +67,7 @@ function showBranch(github, repo, branch) {
     card.addRow("Status: " + status.toUpperCase(), ["status-" + status, "status"]);
     $("#cards").append(card.root);
   }
+
   return callback;
 }
 
@@ -96,7 +97,7 @@ function listBranches(github, repo) {
       }
       showError(errorMessage);
       return;
-    } 
+    }
     $("#error").hide();
     var all = [];
     loaded = value.length;
@@ -112,11 +113,12 @@ function listBranches(github, repo) {
         $("#settings").hide();
         $("#branches").show();
         $("#p1").removeClass("mdl-progress__indeterminate");
-    },
-    function(x, y, z) {
-      console.log(x, y, z)
-    });
+      },
+      function (x, y, z) {
+        console.log(x, y, z)
+      });
   }
+
   return callback;
 }
 

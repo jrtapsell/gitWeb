@@ -6,12 +6,20 @@
     height: 560px;
 }
 
+#get {
+    margin-top: 1em;
+}
+
+.branch-card {
+    border-radius: 2em;
+}
+
 .wide {
-    width:100%;
+    width: 100%;
 }
 
 header {
-    width:100%;
+    width: 100%;
     text-align: center;
     background: #ccc;
 }
@@ -48,8 +56,13 @@ div {
     text-align: center;
 }
 
+body {
+    background: url("https://www.toptal.com/designers/subtlepatterns/patterns/sayagata-400px.png");
+}
+
 #branches {
     display: none;
+    padding-bottom: 2em;
 }
 
 #repo {
@@ -72,7 +85,8 @@ th {
     display: inline-block;
 }
 
-h1 {
+
+header, h1 {
     background: rgba(0, 0, 0, 0.3);
 }
 
@@ -87,7 +101,6 @@ h1 {
 .status-identical {
     background: #649FFA;
 }
-
 
 .status-behind {
     background: #fa9664;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>GitHub Web Status Page</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-blue.min.css" />
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -24,7 +24,7 @@
 <!-- Simple MDL Progress Bar -->
 <div id="p1" class="mdl-progress mdl-js-progress wide"></div>
 <script>
-    document.querySelector('#p1').addEventListener('mdl-componentupgraded', function() {
+    document.querySelector('#p1').addEventListener('mdl-componentupgraded', function () {
         this.MaterialProgress.setProgress(100);
     });
 </script>
@@ -34,13 +34,13 @@
             Settings
         </h1>
         <div class="mdl-cell mdl-cell--11-col center">
-        <label for="keyF">GitHub key</label>
-        <input id="keyF" class="form-control mdl-textfield__input" type="password"/>
-        <label for="teamF">Team name</label>
-        <input id="teamF" class="form-control mdl-textfield__input" type="text"/>
-        <label for="repoF">Repository name</label>
-        <input id="repoF" class="form-control mdl-textfield__input" type="text"/>
-        <button onclick="run()" class="btn btn-primary fill" id="get">Update</button>
+            <label for="keyF">GitHub key</label>
+            <input id="keyF" class="form-control mdl-textfield__input" type="password"/>
+            <label for="teamF">Team name</label>
+            <input id="teamF" class="form-control mdl-textfield__input" type="text"/>
+            <label for="repoF">Repository name</label>
+            <input id="repoF" class="form-control mdl-textfield__input" type="text"/>
+            <button onclick="run()" class="btn btn-primary fill" id="get">Update</button>
         </div>
     </form>
 </div>
@@ -49,7 +49,7 @@
         Branches
     </h1>
     <div class="mdl-cell mdl-cell--11-col center">
-    <div id="cards"></div>
+        <div id="cards"></div>
     </div>
 </div>
 <div id="error">
