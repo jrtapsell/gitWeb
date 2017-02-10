@@ -1,0 +1,80 @@
+.demo-card-wide.mdl-card {
+    width: 350px;
+    display: inline-block;
+    margin: 8px;
+    float: left;
+    height: 560px;
+}
+
+.demo-card-wide > .mdl-card__title {
+    color: #fff;
+    height: 350px;
+}
+
+.status {
+    position: absolute;
+    bottom: 0px;
+}
+
+.fill {
+    width: 100%;
+}
+
+div#cards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+h2.mdl-card__title-text {
+    background-color: rgba(130, 122, 122, 0.9);
+    width: 100%;
+}
+
+div {
+    text-align: center;
+}
+
+#branches {
+    display: none;
+}
+
+#repo {
+    display: none;
+}
+
+#error {
+    display: none;
+}
+
+th {
+    text-align: center;
+}
+
+.commitsBox {
+    display: inline-block;
+}
+
+.userBox {
+    display: inline-block;
+}
+
+h1 {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.status-ahead {
+    background: #64FA78;
+}
+
+.status-diverged {
+    background: #FA6464;
+}
+
+.status-identical {
+    background: #649FFA;
+}
+
+
+.status-behind {
+    background: #fa9664;
+}

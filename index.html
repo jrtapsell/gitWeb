@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/github-api/dist/GitHub.bundle.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <link href="index.css" rel="stylesheet">
+    <script src="index.js"></script>
+</head>
+<body>
+<div id="settings">
+    <form action="#">
+        <h1>
+            Settings
+        </h1>
+        <label for="keyF">GitHub key</label>
+        <input id="keyF" class="form-control" type="password"/>
+        <label for="teamF">Team name</label>
+        <input id="teamF" class="form-control" type="text"/>
+        <label for="repoF">Repository name</label>
+        <input id="repoF" class="form-control" type="text"/>
+        <button onclick="run()" class="btn btn-primary fill" id="get">Update</button>
+    </form>
+</div>
+<div id="branches">
+    <h1>
+        Branches
+    </h1>
+    <div id="cards"></div>
+</div>
+<div id="error">
+    <h1>
+        Error
+    </h1>
+    <h2 id="errorWindow"></h2>
+</div>
+</body>
+</html>
