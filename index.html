@@ -18,25 +18,39 @@
     <script src="index.js"></script>
 </head>
 <body>
+<header>
+    This page is not official nor affiliated with GitHub
+</header>
+<!-- Simple MDL Progress Bar -->
+<div id="p1" class="mdl-progress mdl-js-progress wide"></div>
+<script>
+    document.querySelector('#p1').addEventListener('mdl-componentupgraded', function() {
+        this.MaterialProgress.setProgress(100);
+    });
+</script>
 <div id="settings">
     <form action="#">
         <h1>
             Settings
         </h1>
+        <div class="mdl-cell mdl-cell--11-col center">
         <label for="keyF">GitHub key</label>
-        <input id="keyF" class="form-control" type="password"/>
+        <input id="keyF" class="form-control mdl-textfield__input" type="password"/>
         <label for="teamF">Team name</label>
-        <input id="teamF" class="form-control" type="text"/>
+        <input id="teamF" class="form-control mdl-textfield__input" type="text"/>
         <label for="repoF">Repository name</label>
-        <input id="repoF" class="form-control" type="text"/>
+        <input id="repoF" class="form-control mdl-textfield__input" type="text"/>
         <button onclick="run()" class="btn btn-primary fill" id="get">Update</button>
+        </div>
     </form>
 </div>
 <div id="branches">
     <h1>
         Branches
     </h1>
+    <div class="mdl-cell mdl-cell--11-col center">
     <div id="cards"></div>
+    </div>
 </div>
 <div id="error">
     <h1>
@@ -44,8 +58,5 @@
     </h1>
     <h2 id="errorWindow"></h2>
 </div>
-<footer>
-    This page is not official not affiliated with GitHub
-</footer>
 </body>
 </html>

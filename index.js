@@ -106,13 +106,15 @@ function listBranches(github, repo) {
       }
       all.push(repo.compareBranches("master", branch.name, showBranch(github, repo, branch)));
     });
+    $("#p1").addClass("mdl-progress__indeterminate");
     var prom = Promise.all(all);
     prom.then(function () {
         $("#settings").hide();
         $("#branches").show();
+        $("#p1").removeClass("mdl-progress__indeterminate");
     },
-    function() {
-
+    function(x, y, z) {
+      console.log(x, y, z)
     });
   }
   return callback;
@@ -132,6 +134,7 @@ function run() {
   });
   var repo = gitHub.getRepo(teamName, repoName);
   repo.listBranches(listBranches(gitHub, repo));
+  $('#get').prop('disabled', false);
 }
 
 $(function () {

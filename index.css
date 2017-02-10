@@ -6,16 +6,23 @@
     height: 560px;
 }
 
-footer {
-    position: absolute;
-    bottom: 0;
+.wide {
+    width:100%;
+}
+
+header {
     width:100%;
     text-align: center;
+    background: #ccc;
 }
 
 .demo-card-wide > .mdl-card__title {
     color: #fff;
     height: 350px;
+}
+
+.center {
+    margin: auto;
 }
 
 .status {
