@@ -3,7 +3,7 @@
     display: inline-block;
     margin: 8px;
     float: left;
-    height: 560px;
+    height: 570px;
 }
 
 #get {
@@ -29,6 +29,11 @@ header {
     height: 350px;
 }
 
+#light-back {
+    padding: 2em;
+    background: rgba(255,255,255,0.9);
+}
+
 .center {
     margin: auto;
 }
@@ -36,6 +41,7 @@ header {
 .status {
     position: absolute;
     bottom: 0px;
+    font-weight: bolder;
 }
 
 .fill {
@@ -47,6 +53,8 @@ div#cards {
     flex-wrap: wrap;
 }
 
+header,
+h1,
 h2.mdl-card__title-text {
     background-color: rgba(130, 122, 122, 0.9);
     width: 100%;
@@ -69,10 +77,6 @@ body {
     display: none;
 }
 
-#error {
-    display: none;
-}
-
 th {
     text-align: center;
 }
@@ -85,23 +89,22 @@ th {
     display: inline-block;
 }
 
-
-header, h1 {
-    background: rgba(0, 0, 0, 0.3);
-}
-
 .status-ahead {
     background: #64FA78;
+    color: #35783c;
 }
 
 .status-diverged {
     background: #FA6464;
+    color: #783030;
 }
 
 .status-identical {
     background: #649FFA;
+    color: #305478;
 }
 
 .status-behind {
     background: #fa9664;
+    color: #784730;
 }

@@ -75,30 +75,31 @@ function getCommitDate(cm) {
   return cm.commit.committer.date;
 }
 
-function showError(errorMessage) {
-  $("#error").show();
-  $("#errorWindow").text(errorMessage);
-}
-
 function listBranches(github, repo) {
   function callback(error, value) {
     if (error != null) {
       var errorMessage;
+      console.log(error.response.status);
       switch (error.response.status) {
         case 404:
           errorMessage = "Bad repository details";
+          $("#repoF").parent().addClass("is-invalid");
+          $("#teamF").parent().addClass("is-invalid");
           break;
         case 401:
           errorMessage = "Bad authentication token";
+          $("#keyF").parent().addClass("is-invalid");
           break;
         default:
           errorMessage = String(error);
+          $("#teamF").parent().addClass("is-invalid");
+          $("#repoF").parent().addClass("is-invalid");
+          $("#keyF").parent().addClass("is-invalid");
           break;
       }
-      showError(errorMessage);
+      $('#get').prop('disabled', false);
       return;
     }
-    $("#error").hide();
     var all = [];
     loaded = value.length;
     $.each(value, function (index, branch) {
@@ -123,9 +124,16 @@ function listBranches(github, repo) {
 }
 
 function run() {
-  var authKey = $("#keyF").val();
-  var teamName = $("#teamF").val();
-  var repoName = $("#repoF").val();
+  var keyField = $("#keyF");
+  var teamField = $("#teamF");
+  var repoField = $("#repoF");
+  $('#get').prop('disabled', true);
+  teamField.parent().removeClass("is-invalid");
+  keyField.parent().removeClass("is-invalid");
+  repoField.parent().removeClass("is-invalid");
+  var authKey = keyField.val();
+  var teamName = teamField.val();
+  var repoName = repoField.val();
 
   localStorage.setItem("team", teamName);
   localStorage.setItem("key", authKey);
@@ -136,11 +144,18 @@ function run() {
   });
   var repo = gitHub.getRepo(teamName, repoName);
   repo.listBranches(listBranches(gitHub, repo));
-  $('#get').prop('disabled', false);
+  return false;
 }
 
 $(function () {
-  $("#keyF").val(localStorage.getItem("key"));
-  $("#teamF").val(localStorage.getItem("team"));
-  $("#repoF").val(localStorage.getItem("repo"));
+  var keyField = $("#keyF");
+  var teamField = $("#teamF");
+  var repoField = $("#repoF");
+  keyField.val(localStorage.getItem("key"));
+  keyField.parent().addClass('is-dirty');
+  teamField.val(localStorage.getItem("team"));
+  teamField.parent().addClass('is-dirty');
+  repoField.val(localStorage.getItem("repo"));
+  repoField.parent().addClass('is-dirty');
+  $("#login-form").submit(run)
 });
