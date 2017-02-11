@@ -25,7 +25,9 @@
     <script
             src="https://unpkg.com/github-api/dist/GitHub.bundle.min.js"></script>
 
-    <script src="index.js"></script>
+    <script
+            defer
+            src="index.js"></script>
 
 </head>
 <body>
@@ -34,7 +36,7 @@
 </header>
 
 <!-- Simple MDL Progress Bar -->
-<div id="p1" class="mdl-progress mdl-js-progress wide"></div>
+<div id="p1" class="mdl-progress mdl-js-progress fill"></div>
 <script>
     document.querySelector('#p1').addEventListener('mdl-componentupgraded', function () {
         this.MaterialProgress.setProgress(100);

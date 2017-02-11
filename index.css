@@ -14,10 +14,6 @@
     border-radius: 2em;
 }
 
-.wide {
-    width: 100%;
-}
-
 header {
     width: 100%;
     text-align: center;
@@ -40,7 +36,7 @@ header {
 
 .status {
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
     font-weight: bolder;
 }
 
@@ -75,6 +71,10 @@ body {
 
 #repo {
     display: none;
+}
+
+.status-number {
+    font-weight:bold;
 }
 
 th {
