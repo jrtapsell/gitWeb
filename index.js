@@ -88,14 +88,12 @@
         console.log("Loading error", error);
         return;
       }
-      /*
-      console.group(branch.name);
+      console.groupCollapsed(branch.name);
       console.log("GitHub", github);
       console.log("Repo", repo);
       console.log("Branch", branch);
       console.log("Info", info);
       console.groupEnd();
-      */
       var commits = info.commits;
       var lastCommon = info.merge_base_commit;
       var last_commit;
@@ -162,6 +160,16 @@
         var deletes = $("<td/>");
         deletes.text(totalDelete);
         row.append(deletes);
+        var lastCommit = $("<td/>");
+        lastCommit.text(totalDelete);
+        row.append(lastCommit);
+        repo.listCommits(
+          {'author':person.author.login},
+          function(_, a) {
+            const message = a[0].commit.committer.date;
+            lastCommit.text(stringifyDate(new Date(message)));
+          }
+        );
         userRows.append(row);
       });
     }
