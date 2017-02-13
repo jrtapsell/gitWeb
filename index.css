@@ -108,3 +108,7 @@ th {
     background: #fa9664;
     color: #784730;
 }
+
+#user_table {
+    width: 100%;
+}

@@ -10,6 +10,7 @@
   var branchPanel;
   var loginPanel;
   var cardsArea;
+  var userRows;
 
   $(function () {
     keyField = $("#keyF");
@@ -21,6 +22,7 @@
     cardsArea = $("#cards");
     loginPanel = $("#settings");
     branchPanel = $("#branches");
+    userRows = $("#user_rows");
   });
 
   function markValid(field) {
@@ -86,12 +88,14 @@
         console.log("Loading error", error);
         return;
       }
+      /*
       console.group(branch.name);
       console.log("GitHub", github);
       console.log("Repo", repo);
       console.log("Branch", branch);
       console.log("Info", info);
       console.groupEnd();
+      */
       var commits = info.commits;
       var lastCommon = info.merge_base_commit;
       var last_commit;
@@ -130,6 +134,40 @@
     return new Date(commit.commit.committer.date);
   }
 
+  function contributorStats(github, repo) {
+    function callback(error, stats) {
+      stats.reverse();
+      $.each(stats, function(_, person) {
+        var row = $("<tr/>");
+        var username = $("<td/>")
+        row.append(username);
+        console.log(person);
+        username.text(person.author.login);
+        var weeks = person.weeks;
+        var thisWeek = weeks[weeks.length - 1];
+        var totalAdd = 0;
+        var totalChange = 0;
+        var totalDelete = 0;
+        $.each(weeks, function (_, week) {
+          totalAdd += week.a;
+          totalDelete += week.d;
+          totalChange += week.c;
+        });
+        var commits = $("<td/>");
+        commits.text(person.total);
+        row.append(commits);
+        var adds = $("<td/>");
+        adds.text(totalAdd);
+        row.append(adds);
+        var deletes = $("<td/>");
+        deletes.text(totalDelete);
+        row.append(deletes);
+        userRows.append(row);
+      });
+    }
+    return callback;
+  }
+
   /**
    * Called for each branch.
    *
@@ -144,7 +182,6 @@
     function callback(error, value) {
       if (error != null) {
         var errorMessage;
-
         switch (error.response.status) {
           case 404:
             errorMessage = "Bad repository details";
@@ -165,7 +202,8 @@
         loginButton.prop('disabled', false);
         return;
       }
-      var all = [];
+      var detailsProm = repo.getContributorStats(contributorStats(github, repo));
+      var all = [detailsProm];
       $.each(value, function (index, branch) {
         if (branch.name == "master") {
           return;
