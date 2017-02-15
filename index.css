@@ -89,11 +89,13 @@ th {
     display: inline-block;
 }
 
+.pr-success,
 .status-ahead {
     background: #64FA78;
     color: #35783c;
 }
 
+.pr-failure,
 .status-diverged {
     background: #FA6464;
     color: #783030;
@@ -104,11 +106,8 @@ th {
     color: #305478;
 }
 
+.pr-unchecked,
 .status-behind {
     background: #fa9664;
     color: #784730;
-}
-
-#user_table {
-    width: 100%;
 }

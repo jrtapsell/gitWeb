@@ -11,6 +11,7 @@
   var loginPanel;
   var cardsArea;
   var userRows;
+  var pullRows;
 
   $(function () {
     keyField = $("#keyF");
@@ -23,6 +24,7 @@
     loginPanel = $("#settings");
     branchPanel = $("#branches");
     userRows = $("#user_rows");
+    pullRows = $("#pull_rows");
   });
 
   function markValid(field) {
@@ -176,6 +178,59 @@
     return callback;
   }
 
+  function showPullRequest(github, repo, request) {
+    function callback(_, statuses) {
+      var state;
+      if (statuses.length == 0) {
+        state = "unchecked";
+      } else {
+        state = statuses[0].state;
+      }
+      var row = $("<tr/>");
+      pullRows.append(row);
+      var numberCell = $("<td/>");
+      numberCell.text(request.number);
+      row.append(numberCell);
+      var nameCell = $("<td/>");
+      nameCell.text(request.title);
+      row.append(nameCell);
+      var assigneeCell = $("<td/>");
+      const assignee = request.assignee;
+      if (assignee == null) {
+        assigneeCell.text("unset");
+      } else {
+        assigneeCell.text(assignee.login);
+      }
+      row.append(assigneeCell);
+      var createCell = $("<td/>");
+      createCell.text(stringifyDate(new Date(request.created_at)));
+      row.append(createCell);
+      var updateCell = $("<td/>");
+      updateCell.text(stringifyDate(new Date(request.updated_at)));
+      row.append(updateCell);
+      var statusCell = $("<td/>");
+      statusCell.text(state);
+      row.append(statusCell);
+      statusCell.addClass("pr-" + state);
+      console.groupCollapsed("PULL REQUEST");
+      console.log(github);
+      console.log(repo);
+      console.log(request);
+      console.log(statuses);
+      console.groupEnd();
+    }
+    return callback;
+  }
+
+  function pullRequestsIntermed(github, repo) {
+    function callback(_, requests) {
+      $.each(requests, function(_, value) {
+        repo.listStatuses(value.head.sha, showPullRequest(github, repo, value));
+      })
+    }
+    return callback;
+  }
+
   /**
    * Called for each branch.
    *
@@ -211,7 +266,8 @@
         return;
       }
       var detailsProm = repo.getContributorStats(contributorStats(github, repo));
-      var all = [detailsProm];
+      var pullsProm = repo.listPullRequests({}, pullRequestsIntermed(github, repo));
+      var all = [detailsProm, pullsProm];
       $.each(value, function (index, branch) {
         if (branch.name == "master") {
           return;
