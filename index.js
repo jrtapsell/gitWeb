@@ -77,10 +77,14 @@
     };
 
     this.setLink = function (url) {
-      this.root.click(function () {
-        window.open(url);
-      })
+      makeLink(this.root, url);
     }
+  }
+
+  function makeLink(element, url) {
+    element.click(function () {
+      window.open(url);
+    })
   }
 
   function showBranch(github, repo, branch) {
@@ -211,7 +215,9 @@
       var statusCell = $("<td/>");
       statusCell.text(state);
       row.append(statusCell);
+
       statusCell.addClass("pr-" + state);
+      makeLink(row, request.html_url);
       console.groupCollapsed("PULL REQUEST");
       console.log(github);
       console.log(repo);
