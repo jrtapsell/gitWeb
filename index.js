@@ -217,7 +217,7 @@
       row.append(statusCell);
 
       statusCell.addClass("pr-" + state);
-      makeLink(row, request.html_url);
+      makeLink(row, request.html_url); 
       console.groupCollapsed("PULL REQUEST");
       console.log(github);
       console.log(repo);
@@ -339,12 +339,21 @@
 
   /** Runs when the page has finished loading. */
   $(function () {
-    keyField.val(localStorage.getItem("key"));
-    keyField.parent().addClass('is-dirty');
-    teamField.val(localStorage.getItem("team"));
-    teamField.parent().addClass('is-dirty');
-    repoField.val(localStorage.getItem("repo"));
-    repoField.parent().addClass('is-dirty');
+    const key = localStorage.getItem("key");
+    keyField.val(key);
+    if (key != null) {
+      keyField.parent().addClass('is-dirty');
+    }
+    const team = localStorage.getItem("team");
+    teamField.val(team);
+    if (team != null) {
+      teamField.parent().addClass('is-dirty');
+    }
+    const repo = localStorage.getItem("repo");
+    repoField.val(repo);
+    if (repo != null) {
+      repoField.parent().addClass('is-dirty');
+    }
     loginForm.submit(onLogin)
   });
 })();
