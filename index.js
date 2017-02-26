@@ -141,12 +141,19 @@
   function contributorStats(github, repo) {
     function callback(error, stats) {
       stats.reverse();
+
+
+      var additionsData = [];
+      var deletionsData = [];
+      var commitsData = [];
+
       $.each(stats, function(_, person) {
         var row = $("<tr/>");
-        var username = $("<td/>")
+        var username = $("<td/>");
         row.append(username);
         console.log(person);
-        username.text(person.author.login);
+        const username2 = person.author.login;
+        username.text(username2);
         var weeks = person.weeks;
         var thisWeek = weeks[weeks.length - 1];
         var totalAdd = 0;
@@ -157,6 +164,11 @@
           totalDelete += week.d;
           totalChange += week.c;
         });
+
+        additionsData.push([username2, totalAdd]);
+        deletionsData.push([username2, totalDelete]);
+        commitsData.push([username2, totalChange]);
+
         var commits = $("<td/>");
         commits.text(person.total);
         row.append(commits);
@@ -170,14 +182,55 @@
         lastCommit.text(totalDelete);
         row.append(lastCommit);
         repo.listCommits(
-          {'author':person.author.login},
-          function(_, a) {
+          {'author': username2},
+          function (_, a) {
             const message = a[0].commit.committer.date;
             lastCommit.text(stringifyDate(new Date(message)));
           }
         );
         userRows.append(row);
       });
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        // Create the data table.
+        var data1 = new google.visualization.DataTable();
+        data1.addColumn('string', 'Topping');
+        data1.addColumn('number', 'Slices');
+        rows = [];
+        data1.addRows(commitsData);
+        // Create the data table.
+        var data2 = new google.visualization.DataTable();
+        data2.addColumn('string', 'Topping');
+        data2.addColumn('number', 'Slices');
+        rows = [];
+        data2.addRows(additionsData);
+        // Create the data table.
+        var data3 = new google.visualization.DataTable();
+        data3.addColumn('string', 'Topping');
+        data3.addColumn('number', 'Slices');
+        rows = [];
+        data3.addRows(deletionsData);
+
+
+        // Set chart options
+        var options = {
+          chartArea: {width: "100%", height: "100%"}
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart1 = new google.visualization.PieChart(document.getElementById('additions_chart'));
+        var chart2 = new google.visualization.PieChart(document.getElementById('deletions_chart'));
+        var chart3 = new google.visualization.PieChart(document.getElementById('commits_chart'));
+        chart3.draw(data1, options);
+        chart1.draw(data2, options);
+        chart2.draw(data3, options);
+      }
     }
     return callback;
   }
