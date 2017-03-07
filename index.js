@@ -99,7 +99,6 @@
       console.log("Repo", repo);
       console.log("Branch", branch);
       console.log("Info", info);
-      console.groupEnd();
       var commits = info.commits;
       var lastCommon = info.merge_base_commit;
       var last_commit;
@@ -108,14 +107,38 @@
       } else {
         last_commit = lastCommon;
       }
-      var image = last_commit.author.avatar_url;
+      var icons = [];
+      $.each(commits, function(_, commit) {
+        if (commit.parents.length > 1) {
+          return;
+        }
+        icons.push(commit.author.avatar_url)
+      });
+      var icon_counts = {};
+      $.each(icons, function(_, val) {
+        if (icon_counts[val] == undefined) {
+          icon_counts[val] = 0;
+        }
+        icon_counts[val] += 1;
+      });
+      var max = 0;
+      var murl = lastCommon.author.avatar_url;
+      $.each(icon_counts, function(url, repeats) {
+        if (repeats > max) {
+          max = repeats;
+          murl = url;
+        }
+      });
+      console.log("Commits", commits);
+      console.groupEnd();
+      var image = murl;
       var name = branch.name;
       var ahead = info.ahead_by;
       var behind = info.behind_by;
       var login = last_commit.author.login;
       var status = info.status;
       var card = new Card(image, name);
-      card.addRow(login);
+      card.addRow("Last action by: " + login);
       card.addRow("<span class='left'>Ahead by: <span id=ahead class='status-number'>" + ahead + "</span></span> <span class='right'>Behind by: <span id=behind class='status-number'>" + behind + "</span></span>");
       card.addRow("Last commit:<br>" + stringifyDate(getCommitDate(last_commit)));
       card.addRow("Split date:<br>" + stringifyDate(getCommitDate(lastCommon)));
